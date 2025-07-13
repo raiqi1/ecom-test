@@ -6,9 +6,10 @@ import ProductDetailClient from "./ProductDetailClient";
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }): Promise<Metadata> {
-  const product = await fetchProductById(params.id);
+  const { id } = await params;
+  const product = await fetchProductById(id);
 
   if (!product) {
     return {
@@ -44,11 +45,12 @@ export async function generateMetadata({
 }
 
 interface PageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
-export default function ProductDetailPage({ params }: PageProps) {
-  return <ProductDetailClient productId={params.id} />;
+export default async function ProductDetailPage({ params }: PageProps) {
+  const { id } = await params;
+  return <ProductDetailClient productId={id} />;
 }

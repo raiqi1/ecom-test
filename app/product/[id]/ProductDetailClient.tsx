@@ -44,7 +44,7 @@ const ProductDetailClient: React.FC<ProductDetailClientProps> = ({
     };
 
     loadProduct();
-  }, [productId, addToast]);
+  }, [productId]);
 
   const handleBackToCatalog = () => {
     router.push("/");
