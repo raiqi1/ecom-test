@@ -20,6 +20,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   } = useCart();
 
   const toggleMobileMenu = () => {
+    if (isCartOpen) {
+      setIsCartOpen(false);
+    }
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
@@ -28,6 +31,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   };
 
   const toggleCart = () => {
+    if (isMobileMenuOpen) {
+      setIsMobileMenuOpen(false);
+    }
     setIsCartOpen(!isCartOpen);
   };
 
@@ -55,7 +61,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 Home
               </Link>
               <Link
-                href="/"
+                href="/products"
                 className="text-gray-700 hover:text-blue-600 transition-colors"
               >
                 Products
@@ -104,6 +110,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               <button
                 className="md:hidden text-gray-700 hover:text-blue-600 z-50 relative"
                 onClick={toggleMobileMenu}
+                aria-label="Toggle mobile menu"
               >
                 <svg
                   className="h-6 w-6"
@@ -141,6 +148,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <button
               onClick={closeMobileMenu}
               className="text-gray-700 hover:text-blue-600 transition-colors"
+              aria-label="Close mobile menu"
             >
               <svg
                 className="h-6 w-6"
@@ -168,7 +176,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 Home
               </Link>
               <Link
-                href="/"
+                href="/products"
                 className="block text-gray-700 hover:text-blue-600 transition-colors text-lg"
                 onClick={closeMobileMenu}
               >
@@ -231,7 +239,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
         <div
           className={`
-          fixed top-0 right-0 h-full w-96 bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50
+          fixed top-0 right-0 h-full w-80 bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50
           ${isCartOpen ? "translate-x-0" : "translate-x-full"}
         `}
         >
@@ -240,6 +248,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <button
               onClick={closeCart}
               className="text-gray-700 hover:text-blue-600 transition-colors"
+              aria-label="Close cart"
             >
               <svg
                 className="h-6 w-6"
@@ -300,6 +309,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                             updateQuantity(item.id, item.quantity - 1)
                           }
                           className="w-6 h-6 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-sm"
+                          aria-label="Decrease quantity"
                         >
                           -
                         </button>
@@ -309,6 +319,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                             updateQuantity(item.id, item.quantity + 1)
                           }
                           className="w-6 h-6 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center text-sm"
+                          aria-label="Increase quantity"
                         >
                           +
                         </button>
@@ -317,6 +328,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                     <button
                       onClick={() => removeFromCart(item.id)}
                       className="text-red-500 hover:text-red-700 p-1"
+                      aria-label="Remove item"
                     >
                       <svg
                         className="h-4 w-4"
@@ -375,7 +387,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/" className="hover:text-white transition-colors">
+                  <Link
+                    href="/products"
+                    className="hover:text-white transition-colors"
+                  >
                     Products
                   </Link>
                 </li>
@@ -420,7 +435,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
             <div>
               <h4 className="text-md font-semibold mb-4">Connect With Us</h4>
-              <div className="flex space-x-4 md:flex-col ">
+              <div className="flex space-x-4 md:flex-col md:space-x-0 md:space-y-2">
                 <a
                   href="#"
                   className="text-gray-400 hover:text-white transition-colors"
@@ -444,7 +459,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           </div>
 
           <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 E-Commerce Store. All rights reserved.</p>
+            <p>
+              &copy; {new Date().getFullYear()} E-Commerce Store. All rights
+              reserved.
+            </p>
           </div>
         </div>
       </footer>
